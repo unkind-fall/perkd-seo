@@ -1,0 +1,256 @@
+---
+import CityLayout from '../layouts/CityLayout.astro';
+import cities from '../data/cities.json';
+
+export function getStaticPaths() {
+  return cities.map((city) => ({
+    params: { city: city.slug },
+    props: { city },
+  }));
+}
+
+const { city } = Astro.props;
+
+const title = `Smart Vending Machine ${city.name} | Perkd – ${city.state}`;
+const description = `Looking for a smart vending machine in ${city.name}? Perkd places fully managed smart fridges in ${city.name} ${city.businessTypes.slice(0, 3).join(', ')} and more. Zero upfront cost. Revenue share model.`;
+const canonicalUrl = `https://perkd.com.au/vending-machine-${city.slug}`;
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": `https://perkd.com.au/#organization`,
+      "name": "Perkd",
+      "description": `Smart vending machines for businesses across Australia. Serving ${city.name} and surrounding areas.`,
+      "url": "https://perkd.com.au",
+      "telephone": "+61-1300-PERKD",
+      "email": "hello@perkd.com.au",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": city.name,
+        "addressRegion": city.state,
+        "addressCountry": "AU"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": city.name,
+        "containedInPlace": {
+          "@type": "State",
+          "name": city.state === "QLD" ? "Queensland" : "Victoria"
+        }
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": city.lat,
+        "longitude": city.lng
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/perkd",
+        "https://www.instagram.com/perkdau"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Smart Vending Solutions",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Perkd Smart Vending Fridge",
+              "description": "AI-powered smart vending fridge with cashless payments, remote inventory management, and real-time analytics. No upfront cost for host businesses.",
+              "brand": { "@type": "Brand", "name": "Perkd" },
+              "category": "Smart Vending Machine",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "AUD",
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "description": "Zero upfront cost. Revenue share model for host venues."
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": `How much does a vending machine cost in ${city.name}?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `With Perkd, there is zero upfront cost to host a smart vending machine in ${city.name}. We operate on a revenue share model — you earn a percentage of every sale. We handle installation, restocking, maintenance, and payment processing.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `What types of ${city.name} businesses can host a Perkd vending machine?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `Perkd works with ${city.businessTypes.join(', ')} across ${city.name} and nearby suburbs including ${city.neighborhoods.slice(0, 3).join(', ')}. Any location with 30+ daily foot traffic is a great fit.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the Perkd smart vending machine work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Perkd smart fridges use computer vision and IoT sensors to track inventory in real time. Customers pay by tap-and-go card or phone. We remotely monitor stock levels and dispatch our team for restocking — you never need to touch it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `How long does installation take in ${city.name}?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `Installation in ${city.name} typically takes 1–2 hours. We handle all electrical and connectivity requirements. Your site is up and selling within a week of contract signing.`
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+<CityLayout title={title} description={description} canonicalUrl={canonicalUrl} schema={localBusinessSchema}>
+
+  <!-- NAV -->
+  <header style="background:var(--brand);padding:1rem 0;">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+      <a href="https://perkd.com.au" style="color:#fff;font-weight:700;font-size:1.25rem;letter-spacing:-0.5px;">Perkd</a>
+      <nav style="display:flex;gap:1.5rem;">
+        <a href="https://perkd.com.au/how-it-works" style="color:#e5e7eb;font-size:0.9rem;">How it works</a>
+        <a href="https://perkd.com.au/products" style="color:#e5e7eb;font-size:0.9rem;">Products</a>
+        <a href="https://perkd.com.au/contact" style="color:#fff;font-size:0.9rem;font-weight:600;background:var(--accent);padding:0.4rem 1rem;border-radius:var(--radius);">Get started</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section style="background:linear-gradient(135deg,var(--brand) 0%,#16213e 100%);color:#fff;padding:4rem 0 3.5rem;">
+    <div class="container">
+      <p style="color:var(--accent);font-size:0.85rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:0.75rem;">Smart Vending · {city.name} · {city.state}</p>
+      <h1 style="font-size:clamp(2rem,5vw,3.2rem);font-weight:800;line-height:1.15;margin-bottom:1rem;max-width:700px;">
+        Smart Vending Machines<br/>in {city.name}
+      </h1>
+      <p style="font-size:1.125rem;color:#d1d5db;max-width:560px;margin-bottom:2rem;">{city.description}</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="https://perkd.com.au/contact?city={city.slug}" style="background:var(--accent);color:#fff;font-weight:700;padding:0.875rem 2rem;border-radius:var(--radius);font-size:1rem;display:inline-block;">{city.cta} →</a>
+        <a href="#how-it-works" style="color:#d1d5db;font-weight:600;padding:0.875rem 1.5rem;border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius);display:inline-block;">How it works</a>
+      </div>
+      <p style="margin-top:1.5rem;color:#9ca3af;font-size:0.85rem;">✓ Zero upfront cost &nbsp;·&nbsp; ✓ Fully managed &nbsp;·&nbsp; ✓ Revenue share for you</p>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <section style="background:var(--accent);padding:1.25rem 0;">
+    <div class="container" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;text-align:center;">
+      <div><span style="font-size:1.75rem;font-weight:800;color:#fff;">$0</span><br/><span style="color:rgba(255,255,255,0.85);font-size:0.85rem;">Upfront cost</span></div>
+      <div><span style="font-size:1.75rem;font-weight:800;color:#fff;">24/7</span><br/><span style="color:rgba(255,255,255,0.85);font-size:0.85rem;">Remote monitoring</span></div>
+      <div><span style="font-size:1.75rem;font-weight:800;color:#fff;">&lt;48h</span><br/><span style="color:rgba(255,255,255,0.85);font-size:0.85rem;">Restocking SLA</span></div>
+      <div><span style="font-size:1.75rem;font-weight:800;color:#fff;">100%</span><br/><span style="color:rgba(255,255,255,0.85);font-size:0.85rem;">Cashless payments</span></div>
+    </div>
+  </section>
+
+  <!-- WHAT WE PLACE -->
+  <section style="padding:4rem 0;background:var(--surface);">
+    <div class="container">
+      <h2 style="font-size:1.75rem;font-weight:700;margin-bottom:0.5rem;">Where Perkd Places Smart Fridges in {city.name}</h2>
+      <p style="color:var(--muted);margin-bottom:2.5rem;">We work with venue owners across {city.name} to place smart vending fridges in the locations that convert best.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.25rem;">
+        {city.businessTypes.map((type) => (
+          <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;text-align:center;">
+            <div style="font-size:2rem;margin-bottom:0.5rem;">
+              {type === 'cafes' ? '☕' : type === 'gyms' ? '🏋️' : type === 'offices' || type === 'office buildings' ? '🏢' : type === 'hospitals' || type === 'medical centres' ? '🏥' : type === 'universities' ? '🎓' : type === 'hotels' ? '🏨' : type === 'shopping centres' ? '🛍️' : type === 'co-working spaces' ? '💻' : '📍'}
+            </div>
+            <p style="font-weight:600;text-transform:capitalize;">{type}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" style="padding:4rem 0;">
+    <div class="container">
+      <h2 style="font-size:1.75rem;font-weight:700;margin-bottom:0.5rem;text-align:center;">How Perkd Works for {city.name} Venues</h2>
+      <p style="color:var(--muted);text-align:center;margin-bottom:3rem;max-width:540px;margin-left:auto;margin-right:auto;">Three simple steps from enquiry to your first sale — we handle everything in between.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem;">
+        <div>
+          <div style="width:48px;height:48px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.25rem;margin-bottom:1rem;">1</div>
+          <h3 style="font-weight:700;margin-bottom:0.5rem;">Site assessment</h3>
+          <p style="color:var(--muted);">We visit your {city.name} venue to assess foot traffic, electrical requirements, and the ideal placement spot. Free, no obligation.</p>
+        </div>
+        <div>
+          <div style="width:48px;height:48px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.25rem;margin-bottom:1rem;">2</div>
+          <h3 style="font-weight:700;margin-bottom:0.5rem;">Installation &amp; setup</h3>
+          <p style="color:var(--muted);">Our team installs and connects the smart fridge within 1–2 hours. We stock it with premium products tailored to your customer profile.</p>
+        </div>
+        <div>
+          <div style="width:48px;height:48px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.25rem;margin-bottom:1rem;">3</div>
+          <h3 style="font-weight:700;margin-bottom:0.5rem;">Earn &amp; relax</h3>
+          <p style="color:var(--muted);">You earn a revenue share on every sale. We monitor stock remotely and restock within 48 hours — you don't lift a finger.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBURBS SERVED -->
+  <section style="padding:3rem 0;background:var(--surface);">
+    <div class="container">
+      <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:0.75rem;">Areas We Serve Near {city.name}</h2>
+      <p style="color:var(--muted);margin-bottom:1.5rem;">Perkd serves businesses throughout {city.name} and the surrounding {city.region} area.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.625rem;">
+        {city.neighborhoods.map((n) => (
+          <span style="background:#fff;border:1px solid var(--border);border-radius:100px;padding:0.4rem 1rem;font-size:0.875rem;color:var(--text);">{n}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding:4rem 0;">
+    <div class="container" style="max-width:740px;">
+      <h2 style="font-size:1.75rem;font-weight:700;margin-bottom:2rem;">Frequently Asked Questions — Vending Machines in {city.name}</h2>
+      <div style="display:flex;flex-direction:column;gap:1.5rem;">
+        <details style="border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;" open>
+          <summary style="font-weight:600;cursor:pointer;">How much does a vending machine cost in {city.name}?</summary>
+          <p style="margin-top:0.75rem;color:var(--muted);">With Perkd, there is zero upfront cost to host a smart vending machine in {city.name}. We operate on a revenue share model — you earn a percentage of every sale. We handle installation, restocking, maintenance, and payment processing.</p>
+        </details>
+        <details style="border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;">
+          <summary style="font-weight:600;cursor:pointer;">What types of {city.name} businesses can host a Perkd machine?</summary>
+          <p style="margin-top:0.75rem;color:var(--muted);">Perkd works with {city.businessTypes.join(', ')} across {city.name} and nearby suburbs. Any location with 30+ daily foot traffic is a great fit.</p>
+        </details>
+        <details style="border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;">
+          <summary style="font-weight:600;cursor:pointer;">How does the smart fridge technology work?</summary>
+          <p style="margin-top:0.75rem;color:var(--muted);">Perkd smart fridges use computer vision and IoT sensors to track inventory in real time. Customers pay by tap-and-go card or phone. We remotely monitor stock levels and dispatch our team for restocking — you never need to touch it.</p>
+        </details>
+        <details style="border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;">
+          <summary style="font-weight:600;cursor:pointer;">How long does installation take in {city.name}?</summary>
+          <p style="margin-top:0.75rem;color:var(--muted);">Installation in {city.name} typically takes 1–2 hours. We handle all electrical and connectivity requirements. Your site is up and selling within a week of contract signing.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--brand);color:#fff;padding:4rem 0;text-align:center;">
+    <div class="container">
+      <h2 style="font-size:2rem;font-weight:800;margin-bottom:0.75rem;">Ready to host a smart vending machine in {city.name}?</h2>
+      <p style="color:#d1d5db;margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto;">Join {city.name} venues already earning passive revenue with Perkd. No upfront cost. No maintenance. Just revenue.</p>
+      <a href="https://perkd.com.au/contact?city={city.slug}&utm_source=seo&utm_medium=pseo&utm_campaign=city-pages" style="background:var(--accent);color:#fff;font-weight:700;padding:1rem 2.5rem;border-radius:var(--radius);font-size:1.1rem;display:inline-block;">{city.cta} →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#111827;color:#9ca3af;padding:2rem 0;text-align:center;font-size:0.875rem;">
+    <div class="container">
+      <p>© 2024 Perkd Pty Ltd · ABN 00 000 000 000 · <a href="https://perkd.com.au/privacy" style="color:#6b7280;">Privacy Policy</a> · <a href="https://perkd.com.au/terms" style="color:#6b7280;">Terms</a></p>
+      <p style="margin-top:0.5rem;color:#4b5563;">Smart vending machines for Australian businesses · Brisbane · Gold Coast · Melbourne</p>
+    </div>
+  </footer>
+
+</CityLayout>
