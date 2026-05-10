@@ -15,6 +15,12 @@ const { city } = Astro.props;
 // e.g. PUBLIC_SITE_URL=https://city.perkd.com.au
 const siteUrl = (import.meta.env.PUBLIC_SITE_URL || 'https://perkd.com.au').replace(/\/$/, '');
 
+const stateNames: Record<string, string> = {
+  QLD: 'Queensland', VIC: 'Victoria', NSW: 'New South Wales',
+  WA: 'Western Australia', SA: 'South Australia', ACT: 'Australian Capital Territory',
+  TAS: 'Tasmania', NT: 'Northern Territory',
+};
+
 const title = `Smart Vending Machine ${city.name} | Perkd – ${city.state}`;
 const description = `Looking for a smart vending machine in ${city.name}? Perkd places fully managed smart fridges in ${city.name} ${city.businessTypes.slice(0, 3).join(', ')} and more. Zero upfront cost. Revenue share model.`;
 const canonicalUrl = `${siteUrl}/vending-machine-${city.slug}`;
@@ -41,7 +47,7 @@ const localBusinessSchema = {
         "name": city.name,
         "containedInPlace": {
           "@type": "State",
-          "name": city.state === "QLD" ? "Queensland" : "Victoria"
+          "name": stateNames[city.state] ?? city.state
         }
       },
       "geo": {
