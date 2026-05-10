@@ -1,16 +1,20 @@
 ---
 import cities from '../data/cities.json';
 
+// Set PUBLIC_SITE_URL in CF Pages env vars once the domain is confirmed
+// e.g. PUBLIC_SITE_URL=https://city.perkd.com.au
+const siteUrl = (import.meta.env.PUBLIC_SITE_URL || 'https://perkd.com.au').replace(/\/$/, '');
+
 const title = 'Smart Vending Machines Australia | Perkd City Hub';
 const description = 'Perkd places smart vending fridges in cafes, offices, gyms, and commercial venues across Brisbane, Gold Coast, Melbourne, and surrounding suburbs. Zero upfront cost. Revenue share model.';
 
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": "https://perkd.com.au/#organization",
+  "@id": `${siteUrl}/#organization`,
   "name": "Perkd",
-  "url": "https://perkd.com.au",
-  "logo": "https://perkd.com.au/logo.png",
+  "url": siteUrl,
+  "logo": `${siteUrl}/logo.png`,
   "description": description,
   "areaServed": cities.map(c => ({ "@type": "City", "name": c.name })),
   "sameAs": [
@@ -26,7 +30,7 @@ const orgSchema = {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href="https://perkd.com.au/vending-locations" />
+  <link rel="canonical" href={`${siteUrl}/`} />
   <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

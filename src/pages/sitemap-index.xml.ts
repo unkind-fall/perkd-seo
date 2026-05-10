@@ -1,8 +1,9 @@
 import type { APIRoute } from 'astro';
 import cities from '../data/cities.json';
 
-export const GET: APIRoute = () => {
-  const base = 'https://perkd.com.au';
+export const GET: APIRoute = ({ site }) => {
+  // Uses PUBLIC_SITE_URL env var when set (e.g. https://city.perkd.com.au), else falls back to astro.config site
+  const base = (import.meta.env.PUBLIC_SITE_URL || site?.toString() || 'https://perkd.com.au').replace(/\/$/, '');
   const today = new Date().toISOString().split('T')[0];
 
   const urls = cities.map((city) => ({

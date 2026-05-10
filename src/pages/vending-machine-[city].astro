@@ -11,19 +11,23 @@ export function getStaticPaths() {
 
 const { city } = Astro.props;
 
+// Set PUBLIC_SITE_URL in CF Pages env vars once the domain is confirmed
+// e.g. PUBLIC_SITE_URL=https://city.perkd.com.au
+const siteUrl = (import.meta.env.PUBLIC_SITE_URL || 'https://perkd.com.au').replace(/\/$/, '');
+
 const title = `Smart Vending Machine ${city.name} | Perkd – ${city.state}`;
 const description = `Looking for a smart vending machine in ${city.name}? Perkd places fully managed smart fridges in ${city.name} ${city.businessTypes.slice(0, 3).join(', ')} and more. Zero upfront cost. Revenue share model.`;
-const canonicalUrl = `https://perkd.com.au/vending-machine-${city.slug}`;
+const canonicalUrl = `${siteUrl}/vending-machine-${city.slug}`;
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "LocalBusiness",
-      "@id": `https://perkd.com.au/#organization`,
+      "@id": `${siteUrl}/#organization`,
       "name": "Perkd",
       "description": `Smart vending machines for businesses across Australia. Serving ${city.name} and surrounding areas.`,
-      "url": "https://perkd.com.au",
+      "url": siteUrl,
       "telephone": "+61-1300-PERKD",
       "email": "hello@perkd.com.au",
       "address": {

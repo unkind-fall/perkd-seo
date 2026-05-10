@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { title, description, canonicalUrl, schema } = Astro.props;
+const siteUrl = (import.meta.env.PUBLIC_SITE_URL || 'https://perkd.com.au').replace(/\/$/, '');
 ---
 <!DOCTYPE html>
 <html lang="en-AU">
@@ -20,7 +21,7 @@ const { title, description, canonicalUrl, schema } = Astro.props;
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content="https://perkd.com.au/og-image.jpg" />
+    <meta property="og:image" content={`${siteUrl}/og-image.jpg`} />
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
