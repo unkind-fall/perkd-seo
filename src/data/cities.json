@@ -133,5 +133,50 @@
     "neighborhoods": ["Smith Street", "Brunswick Street", "Johnston Street"],
     "businessTypes": ["creative studios", "co-working spaces", "gyms", "bars", "retail"],
     "cta": "Place a Perkd fridge in Fitzroy"
+  },
+  {
+    "slug": "sydney",
+    "name": "Sydney",
+    "state": "NSW",
+    "region": "Sydney",
+    "population": "5.3 million",
+    "lat": -33.8688,
+    "lng": 151.2093,
+    "primaryKeyword": "vending machine sydney",
+    "searchVolume": 480,
+    "description": "Sydney's dense CBD, thriving tech precincts, and world-class gym culture create exceptional demand for smart vending. Perkd places fully managed smart fridges across Sydney offices, co-working spaces, medical centres, and fitness clubs.",
+    "neighborhoods": ["CBD", "Surry Hills", "Pyrmont", "Parramatta", "North Sydney"],
+    "businessTypes": ["offices", "gyms", "co-working spaces", "universities", "medical centres"],
+    "cta": "Get a free Sydney site assessment"
+  },
+  {
+    "slug": "perth",
+    "name": "Perth",
+    "state": "WA",
+    "region": "Perth",
+    "population": "2.2 million",
+    "lat": -31.9505,
+    "lng": 115.8605,
+    "primaryKeyword": "vending machine perth",
+    "searchVolume": 260,
+    "description": "Perth's booming resources sector, growing CBD, and health-conscious population make it a strong market for smart vending. Perkd places smart fridges in Perth offices, hospitals, gyms, and commercial buildings throughout the metro area.",
+    "neighborhoods": ["CBD", "Fremantle", "Subiaco", "Joondalup", "Midland"],
+    "businessTypes": ["offices", "gyms", "medical centres", "shopping centres", "universities"],
+    "cta": "Book a Perth site visit"
+  },
+  {
+    "slug": "adelaide",
+    "name": "Adelaide",
+    "state": "SA",
+    "region": "Adelaide",
+    "population": "1.4 million",
+    "lat": -34.9285,
+    "lng": 138.6007,
+    "primaryKeyword": "vending machine adelaide",
+    "searchVolume": 210,
+    "description": "Adelaide's compact CBD, thriving food and wine culture, and growing health sector make it ideal for smart vending. Perkd partners with Adelaide offices, hospitals, gyms, and hospitality venues to deliver fully managed smart fridge solutions.",
+    "neighborhoods": ["CBD", "Norwood", "Glenelg", "Hindmarsh", "Port Adelaide"],
+    "businessTypes": ["offices", "cafes", "hospitals", "shopping centres", "gyms"],
+    "cta": "Place a Perkd fridge in Adelaide"
   }
 ]
