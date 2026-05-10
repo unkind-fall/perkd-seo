@@ -119,6 +119,22 @@ const localBusinessSchema = {
             "@type": "Answer",
             "text": `Installation in ${city.name} typically takes 1–2 hours. We handle all electrical and connectivity requirements. Your site is up and selling within a week of contract signing.`
           }
+        },
+        {
+          "@type": "Question",
+          "name": `What products does a Perkd smart fridge stock in ${city.name}?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `Product selection is tailored to each ${city.name} venue. We typically stock chilled beverages, fresh snacks, healthy protein options, and convenience items. Our team analyses your customer profile and adjusts the product mix based on real sales data to maximise revenue at your location.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `Do I need any licences or permits to host a vending machine in ${city.name}?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `In most cases, no special licence is required for a venue host in ${city.name}. Perkd holds the relevant food handling and operational permits and manages all compliance requirements on your behalf.`
+          }
         }
       ]
     }
@@ -242,6 +258,36 @@ const localBusinessSchema = {
           <summary style="font-weight:600;cursor:pointer;">How long does installation take in {city.name}?</summary>
           <p style="margin-top:0.75rem;color:var(--muted);">Installation in {city.name} typically takes 1–2 hours. We handle all electrical and connectivity requirements. Your site is up and selling within a week of contract signing.</p>
         </details>
+        <details style="border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;">
+          <summary style="font-weight:600;cursor:pointer;">What products does a Perkd smart fridge stock in {city.name}?</summary>
+          <p style="margin-top:0.75rem;color:var(--muted);">Product selection is tailored to each {city.name} venue. We typically stock a mix of chilled beverages, fresh snacks, healthy protein options, and convenience items. Our team analyses your customer profile and adjusts the product mix based on real sales data to maximise revenue at your location.</p>
+        </details>
+        <details style="border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;">
+          <summary style="font-weight:600;cursor:pointer;">Do I need any licences or permits to host a vending machine in {city.name}?</summary>
+          <p style="margin-top:0.75rem;color:var(--muted);">In most cases, no special licence is required for a venue host in {city.name}. Perkd holds the relevant food handling and operational permits. We manage all compliance requirements on your behalf, including product labelling, temperature monitoring, and payment system certifications.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS SERVED -->
+  <section style="padding:3.5rem 0;background:var(--surface);">
+    <div class="container">
+      <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:0.75rem;">What Perkd Smart Fridges Stock in {city.name}</h2>
+      <p style="color:var(--muted);margin-bottom:2rem;">Every {city.name} fridge is stocked to match your customer profile. Our data team adjusts the product mix monthly to maximise sell-through and your revenue share.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+        {[
+          { icon: '🥤', label: 'Chilled beverages', desc: 'Cold brew, kombucha, energy drinks, sparkling water' },
+          { icon: '🥗', label: 'Fresh snacks', desc: 'Sandwiches, salad bowls, protein boxes' },
+          { icon: '💊', label: 'Health & wellness', desc: 'Protein bars, nuts, supplements, electrolytes' },
+          { icon: '☕', label: 'Hot & cold coffee', desc: 'RTD cold brew and specialty coffee options' },
+        ].map(p => (
+          <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;">
+            <div style="font-size:1.75rem;margin-bottom:0.5rem;">{p.icon}</div>
+            <p style="font-weight:700;margin-bottom:0.25rem;">{p.label}</p>
+            <p style="color:var(--muted);font-size:0.875rem;">{p.desc}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
